@@ -68,10 +68,12 @@ export default {
       // https://cityattack.tistory.com/64
       const str = /\s/g;
       if (isNaN(after) === true) {
+        console.log(after);
         alert("숫자만 입력하셈");
         this.month = 1;
       } else if (typeof after === "string" && after.match(str)) {
         // typeof after === "string" 해줘야 다시 1로 값이 변환됨
+        console.log(after);
         alert("숫자만 입력하셈");
         this.month = 1;
       }
