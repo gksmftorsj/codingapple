@@ -1,0 +1,8 @@
+vue 설치
+npm install -g @vue/cli
+설치가 끝났으면 터미널에서 
+vue create 프로젝트명 입력
+vue 미리보기
+npm run serve => localhost:8080으로 접속
+폴더 오픈할 때 create한 폴더를 열어야 제대로 열림 
+ex) vue폴더가 아닌 VUEDONGSAN폴더를 오픈해야함

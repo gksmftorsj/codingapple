@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TodoApp List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/todo-app/public/main.css">
+  </head>
+
+  <body>
+
+    <!-- nav.html을 첨부해주세요 -->
+    <%- include("nav.html") %>
+
+      <h4 class="text-center m-5">채팅방</h4>
+
+      <div class="container p-4 detail">
+        <div class="row">
+          <div class="col-3">
+            <ul class="list-group chat-list">
+              <% for(let i=0; i<data.length; i++){ %>
+                <li class="list-group-item" data-id="<%= data[i]._id  %>">
+                  <h6>
+                    <%= data[i].title %>
+                  </h6>
+                  <h6 class="text-small">
+                    <%= data[i].member[0] %>
+                  </h6>
+                </li>
+                <% } %>
+            </ul>
+          </div>
+
+          <div class="col-9 p-0">
+            <div class="chat-room">
+              <ul class="list-group chat-content">
+              </ul>
+              <div class="input-group">
+                <input class="form-control" id="chat-input">
+                <button class="btn btn-secondary" id="send">전송</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+
+        let 지금누른채팅방id;
+        let evenetSource;
+
+        $(".list-group-item").click(function () {
+          $(this).css("background-color", "#eee")
+          지금누른채팅방id = this.dataset.id;
+          $(".chat-content").html("");
+
+          // 소통채널 나가기 => 다른 소통채널 눌렀을 때 이미 소통채널이 켜져있을 경우 undefined가 아니기 때문에 소통채널 나가도록 실행 
+          if (evenetSource !== undefined) {
+            evenetSource.close();
+          }
+
+          // get요청 대신 사용할 수 있는 함수 => new EventSource("/경로")
+          // get요청이랑 똑같은데 실시간으로 전송하는 데이터를 받기 위한 특별한 get요청방법임
+          // 실시간 소통채널 입장완료
+          evenetSource = new EventSource("/message/" + 지금누른채팅방id);
+          // test 부분은 서버에서 보낸 데이터이름
+          evenetSource.addEventListener("test", (e) => {
+            // e.data => 서버에서 보낸 데이터
+            // 채팅방 하나 누르면 /message 채널에 입장하고 서버가 데이터 보내주면 출력해줌
+            console.log(e.data);
+            console.log(JSON.parse(e.data));
+            const getData = JSON.parse(e.data);
+            getData.forEach((getData) => {
+              $(".chat-content").append(`<li><span class="chat-box">${ getData.content }</span></li>`)
+            })
+          })
+        })
+
+        $("#send").click(() => {
+          const 채팅내용 = $("#chat-input").val();
+          const sendData = {
+            parent: 지금누른채팅방id,
+            content: 채팅내용
+          }
+          $.post("/message", sendData).then(() => {
+            console.log("메세지데이터 전송성공")
+          })
+          document.getElementById("chat-input").value = "";
+        })
+      </script>
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+  </body>
+
+</html>

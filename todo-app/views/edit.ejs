@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TodoApp Edit</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <link rel="stylesheet" href="/todo-app/public/main.css">
+</head>
+
+<body>
+  <%- include("nav.html") %>
+
+    <h4 class="container mt-4"><strong>글 수정페이지</strong></h4>
+
+    <div class="container mt-3">
+      <!-- 라이브러리 설치 후 ?_method=PUT 작성 -->
+      <form action="/edit?_method=PUT" method="POST">
+        <div class="form-group">
+          <label>오늘의 할일</label>
+          <input type="text" value="<%= post._id %>" name="id" style="display: none;">
+          <!-- ejs쓸 때 등호(=) 없으면 일반 js쓸 때 있으면 일반 변수명 쓸 때  -->
+          <input value="<%= post.제목 %>" type="text" class="form-control" name="title">
+        </div>
+        <div class="form-group mt-3">
+          <label>날짜</label>
+          <input value="<%= post.날짜 %>" type="text" class="form-control" name="date">
+        </div>
+        <button type="submit" class="btn btn-danger mt-3">수정하기</button>
+      </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+      crossorigin="anonymous"></script>
+</body>
+
+</html>

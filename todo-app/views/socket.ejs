@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TodoApp List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/todo-app/public/main.css">
+  </head>
+
+  <body>
+
+    <div>채팅방</div>
+    <div id="content"></div>
+    <input id="input1">
+    <button id="send">서버에 메세지 보내기</button>
+    <button id="room1">채팅방1 입장</button>
+    <button id="room1-send">채팅방1에서 메세지 보내기</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+      crossorigin="anonymous"></script>
+    <!-- socket.io를 html파일에도 설치해야 유저가 이용가능함 -->
+    <!-- (주의) 서버에 설치한 버전과 동일해야함 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.3/socket.io.js"
+      integrity="sha512-iWPnCISAd/J+ZacwV2mbNLCaPGRrRo5OS81lKTVPtRg1wGTC20Cfmp5Us5RcbLv42QLdbAWl0MI57yox5VecQg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+      // script 태그 안에 있는 코드는 페이지 로드시 한번 쭉 실행됨
+      // 유저가 WebSocekt에 접속하는 법
+      const socket = io();
+
+      $("#room1").click(() => {
+        // socket 사용할 때는 socket으로 GET/POST요청 대체 가능
+        socket.emit("joinroom", "채팅방입장시켜줘")
+      })
+
+      $("#room1-send").click(() => {
+        socket.emit("room1-send", "반가워 채팅방1 사람들아")
+      })
+
+
+
+      $("#send").click(() => {
+        // 유저가 서버에게 웹소켓으로 실시간 메세지 보내는 법 => socket.emit(작명(any), 메세지)
+        socket.emit("user-send", $("#input1").val())
+      })
+
+      // 서버->유저 메세지 전송은 io.emit() 메세지 수신은 socket.on()
+      // 서버가 broadcast 이름으로 메세지 보내면 아래 코드 실행해주셈~
+      // 콜백함수 parameter(data(any))에 서버가 보낸 메세지가 숨겨져있음
+      socket.on("broadcast", (data) => {
+        // 서버에서 메세지 받으면 <div>로 보여주자
+        console.log(data);
+        $("#content").append(`<div>${ data }</div>`)
+      })
+    </script>
+  </body>
+
+</html>

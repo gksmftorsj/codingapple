@@ -1,0 +1,111 @@
+이미지 가운데 정렬하는 방법
+display: block;
+margin-left: auto;
+margin-right: auto;
+
+position absolute 가운데 정렬하는 방법
+position: absolute;
+left: 0;
+right: 0;
+margin: auto;
+width: 150px;
+width는 아무렇게나 적당히 주기만 하면됨
+
+어떤 요소를 궁극의 가운데정렬을 하고 싶을 때
+position absolute를 주고 top, left, transform 속성을 차례로 준다
+그럼 position relative를 가진 부모에 대해 정가운데 위치시킬 수 있다
+max-width, width 등으로 크기 조정을 넣는 것도 좋다
+position: absolute;'
+top: 50%;
+left: 50%;
+transform : translate(-50%,-50%);
+
+반응형 하려면 %써야 하지만 pc에서는 너무 크기 때문에
+max-width를 사용하여 최대 크기를 설정하면 됨
+max-height, min-width, min-height도 마찬가지
+width는 content 영역의 너비를 의미한다. 그래서 padding을 주면 설정한 크기를 넘어감 그래서 box-sizing: border-box를 주면 padding, border를 포함한 값이 width값이 된다. box-sizing: content-box를 주면 포함 안한다. 그래서 초기설정값에 포함시키는게 편하다.
+
+border-collapse: collapse; 사용하면 테이블간 간격 없어진다.
+
+vertical-align: middle, top, bottom
+용도1 => 글씨간의 세로정렬할 때 사용
+용도2 => inline/inline-block 요소 간의 세로정렬할 때 사용
+용도3 => table 안에서 세로정렬할 때 사용
+
+:hover => 마우스를 올렸을 때
+:focus => 마우스 클릭 후 커서가 찍혀있을 때 이후 다른 곳 클릭 시 focus를 잃음
+:active => 마우스가 눌린 상태일 때
+순서는 hover -> focus -> active 순서로 사용해야 제대도 작동함
+
+:link => 방문 전 링크 스타일링할 때
+:visited => 방문 후 링크 스타일링 할 때
+
+class 작명할 때 Block__Element--modifier 룰 따라하자 옛날 얘기임...
+ex)
+profile
+ profile__img
+ profile__title
+ profile__content
+ profile__button--red
+ profile__button--blue
+
+or
+
+profile
+ profile-img
+ profile-title
+ profile-content
+ profile-button
+ 
+폰트 부드럽게 처리하려면 회전시키기
+h1, span, p 등{
+transform: rorate(0.03deg);
+}
+
+css 축약어
+w100% => width: 100%;
+h100% => height: 100%
+df => display: flex;
+jcc => justify-content: center;
+aic => align-items: center;
+tac => text-align: center;
+bc => background-color: ;
+m10 => margin: 10;
+mt, mr, mb, ml
+p10 => padding: 10;
+pt, pr, pb, pl
+등등등
+
+bootstrap css-layout
+grid=> container, row, col(12칸)
+mideaquery=> sm, md, lg 등 사용
+
+::first-letter
+=> 첫 글자만 적용
+::first-line
+=> 첫 줄만 적용
+???::after
+=>???tag 가장 뒤 쪽에 추가하고 싶을 때
+ex) content: "안녕"; 작성시 "안녕"추가 됨
+???::before
+=> after와 마찬가지로 가장 앞 쪽에 추가하고 싶을 때
+::file-selector-button
+=>파일버튼 스타일링할 때
+ input[type=file]::-webkit-file-upload-button
+=> 개발자도구 키면 나옴
+input::-webkit-input-placeholder
+=> placeholder 스타일링할 때
+만약 개발자 도구 켰는데 pseudo가 안 보이면 밑에 스타일에서 user agent stylesheet에서 해당 요소를 복사해서 스타일링 하면 됨
+근데 적용이 안될 때는 브라우저 기본 css를 안보이게 즉 user agent stylesheet를 적용하지 않게 해주는 appearance:none를 적용 해주어야 한다.
+
+-webkt-
+=> Chorome, Safari, Edge에서만 적용되는 스타일
+-ms-
+=> Explorer에서만 적용되는 스타일
+-moz-
+=> Firefox에서만 적용되는 스타일
+
+이 속성이 있어야 어떤 요소를 회전시킬 때 우리가 평소에 생각하는 3d 사물처럼 동작한다.
+transform-style: preserve-3d; 
+원래 어떤 HTML 요소를 뒤집으면 뒷면의 그림자가 보이는데 그걸 안보이게 처리해주는 명령어다.
+backface-visibility: hidden;

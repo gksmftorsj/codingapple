@@ -1,0 +1,49 @@
+jquery
+$사용하면 jquery문법만 사용가능함
+$, addClass, removeClass, hide, show, on 등 순수js보다 더 쉽게 작성 가능
+
+one-way UI 애니메이션 만드는 법(A상태 -> B상태)
+1. 시작스타일
+2. 최종스타일
+3. 원할 때 최종스타일로 변하라고 코드짬
+4. transition 추가
+ex) modal opacity
+1. 시작스타일
+=> visibility: hidden;
+     opacity: 0;
+2. 최종스타일
+=> visibility: visible;
+     opacity: 1;
+3. 원할 때 최종스타일로 변하라고 JS 코드짬
+4. 시작스타일에 transition 추가
+=> transition: all 1s;
+
+ex) modal slide-down
+1. 시작스타일
+=> visibility: hidden;
+     position: absolute;
+     top: -100%;
+     transition: all 1s;
+2. 최종스타일
+=> visibility: visible;
+     position: absolute;
+     top: 0px;
+
+ex) navbar slide-down
+1. 시작스타일
+=> height: 0px;
+     visibility: hidden;
+     transition: all 1s;
+     overflow: hidden;
+2. 최종스타일
+=> height: 207px;
+     visibility: visible;
+
+object data 뽑을 때 ["dataname"]으로 뽑기가능
+ex) 
+const car1 = {
+  name: "소나타",
+  price: 50000,
+  color: "white",
+};일 때 .을 사용하면 car1.name로 변수를 사용할 수 없지만
+car1["name"]을 사용하면 변수를 사용할 수 있다.
