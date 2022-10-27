@@ -140,6 +140,14 @@
       }
       오브젝트.함수();
 
+      // 12. 원래 object 내에서 this 값은 본인이 속한 object 값이지만 Arrow Fucntion을 사용하면 바깥의 this값을 그대로 가져오기 때문에 window값이 됨
+      const 오브젝트 = {
+        함수: () => {
+          console.log(this);
+        }
+      }
+      오브젝트.함수;
+
       // 함수 만드는 방법
       // 1.
       function 함수() {
@@ -157,6 +165,8 @@
       // Arrow function 예시
       // 1. forEach 콜백함수
       [1, 2, 3, 4].forEach(a => console.log(a));
+
+
 
 
     </script>
